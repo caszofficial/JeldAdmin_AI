@@ -27,6 +27,7 @@ La API que se usa es la desplegada: https://management-backend-fawn.vercel.app (
 -Todo utilizando siempre tailwind.
 -Siguiendo buenas practicas.
 -Haciendo enfasis en mobile first.
+-En `grid`, declara siempre la columna base (`grid grid-cols-1 gap-8 lg:grid-cols-2`). Si omites las columnas en movil, Tailwind no aplica `minmax(0,1fr)` y un hijo ancho (p. ej. una tira de miniaturas con `overflow-x-auto`) desborda la pantalla.
 
 ## Forma de trabajar
 
