@@ -37,6 +37,15 @@ Que en este caso se encuentra en C:\Users\user\Desktop\Javier\Vitrina main\manag
 -Trabajaras en el repo de https://github.com/caszofficial/JeldAdmin_AI.git.
 -Al terminar has un resumen de lo que cambiaste y cualquier decision que deba revisar y actualiza AGENTS.md y MEMORY.md en caso de ser necesario.
 
+## Notas tecnicas (implementacion)
+
+-Scaffold: Vite 8 + React 19 + TypeScript 6. Estilos con Tailwind 4 via el plugin `@tailwindcss/vite`; los tokens (colores primary/gold, fuente) se definen en `src/index.css` con `@theme`.
+-Iconos: `lucide-react` (unica dependencia extra permitida).
+-Peticiones: instancia unica de axios en `src/api/client.ts` con `withCredentials: true` y `baseURL = VITE_API_URL` (por defecto `http://localhost:3000`).
+-Estructura creada: `src/api`, `src/types`, `src/context` (AuthContext), `src/components` (ProtectedRoute, PageContainer, Sidebar, Header), `src/layout/Layout.tsx`, `src/pages` (Auth/Login, Dashboard, Placeholder).
+-`tsconfig.app.json` usa `verbatimModuleSyntax` y `erasableSyntaxOnly`: usar `import type` en imports de solo tipos.
+-En local la API corre en `:3000` y el frontend en `:5173` (CORS_ORIGIN del backend ya lo permite).
+
 ## Memoria
 
 -Al empezar lee `MEMORY.md` para conocer el estado del proyecto y las decisiones tomadas.
