@@ -41,10 +41,11 @@ La API que se usa es la desplegada: https://management-backend-fawn.vercel.app (
 
 -Scaffold: Vite 8 + React 19 + TypeScript 6. Estilos con Tailwind 4 via el plugin `@tailwindcss/vite`; los tokens (colores primary/gold, fuente) se definen en `src/index.css` con `@theme`.
 -Iconos: `lucide-react` (unica dependencia extra permitida).
--Peticiones: instancia unica de axios en `src/api/client.ts` con `withCredentials: true` y `baseURL = VITE_API_URL` (por defecto `https://management-backend-fawn.vercel.app`).
+-Peticiones: instancia unica de axios en `src/api/client.ts` con `withCredentials: true` y `baseURL = '/api'`.
+-Sesion: el navegador SIEMPRE llama a `/api` (mismo origen) para que la cookie `session_id` sea **first-party**. Vite la reenvia al backend con `server.proxy`/`preview.proxy` usando `VITE_API_URL` como destino. NUNCA llamar al backend cross-site (otro dominio): el navegador bloquea la cookie y todo `POST/PATCH/DELETE` responde 401. En produccion, el hosting del frontend debe reenviar `/api` al backend.
 -Un modulo por entidad en `src/api` (peticiones), `src/types` (tipos) y `src/pages/<Entidad>/` (`<Entidad>.tsx`, `Create<Entidad>.tsx`, `<Entidad>Detail.tsx`).
 -`tsconfig.app.json` usa `verbatimModuleSyntax` y `erasableSyntaxOnly`: usar `import type` en imports de solo tipos.
--Frontend en `:5173`; el backend desplegado ya permite ese origen por CORS con cookies.
+-Frontend en `:5173` (`npm run dev`) y `:4173` (`npm run preview`); ambos sirven `/api` via proxy al backend desplegado, asi que en desarrollo no aplica CORS ni el bloqueo de cookies cross-site.
 
 ## Memoria
 

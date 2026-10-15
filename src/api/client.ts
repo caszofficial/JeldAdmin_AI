@@ -1,7 +1,10 @@
 import axios from 'axios'
 
-// Cliente HTTP central: la cookie de sesión viaja gracias a withCredentials.
+// Cliente HTTP central. El navegador siempre usa un origen propio (`/api`) para que
+// la cookie de sesión sea first-party: en desarrollo Vite reenvía `/api` al backend
+// y en producción lo hace el hosting del frontend. `withCredentials` mantiene el
+// envío de cookies explícito.
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:3000',
+  baseURL: '/api',
   withCredentials: true,
 })
