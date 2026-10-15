@@ -1,16 +1,8 @@
 import { useEffect, useState } from 'react'
-import {
-  Bath,
-  BedDouble,
-  ExternalLink,
-  ImageOff,
-  MapPin,
-  Pencil,
-  Ruler,
-  Trash2,
-} from 'lucide-react'
+import { Bath, BedDouble, ExternalLink, MapPin, Pencil, Ruler, Trash2 } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { deleteListing, getListing, updateListing } from '../../api/listings'
+import ImageGallery from '../../components/ImageGallery'
 import PageContainer from '../../components/PageContainer'
 import { cleanDescription, formatArea, formatPrice } from '../../lib/format'
 import type { Listing, ListingInput } from '../../types/listing'
@@ -26,50 +18,6 @@ function InfoItem({ icon: Icon, label, value }: { icon: typeof MapPin; label: st
         <p className="text-xs uppercase tracking-wide text-slate-400">{label}</p>
         <p className="text-sm font-medium text-slate-700">{value}</p>
       </div>
-    </div>
-  )
-}
-
-function Gallery({ media, name }: { media: string[]; name: string }) {
-  const [active, setActive] = useState(0)
-  const [failed, setFailed] = useState(false)
-
-  if (media.length === 0 || failed) {
-    return (
-      <div className="flex h-64 items-center justify-center rounded-3xl bg-slate-100 text-slate-300">
-        <ImageOff size={36} />
-      </div>
-    )
-  }
-
-  return (
-    <div className="space-y-3">
-      <img
-        src={media[active]}
-        alt={name}
-        onError={() => setFailed(true)}
-        className="h-64 w-full rounded-3xl object-cover sm:h-96"
-      />
-
-      {media.length > 1 && (
-        <div className="flex gap-3 overflow-x-auto pb-1">
-          {media.map((url, index) => (
-            <button
-              key={`${url}-${index}`}
-              type="button"
-              onClick={() => {
-                setFailed(false)
-                setActive(index)
-              }}
-              className={`h-16 w-20 shrink-0 overflow-hidden rounded-2xl border-2 ${
-                index === active ? 'border-primary-500' : 'border-transparent'
-              }`}
-            >
-              <img src={url} alt="" className="h-full w-full object-cover" />
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   )
 }
@@ -173,7 +121,7 @@ export default function ListingDetail() {
       }
     >
       <div className="grid gap-8 lg:grid-cols-2">
-        <Gallery key={listing.id} media={listing.media} name={listing.name} />
+        <ImageGallery key={listing.id} media={listing.media} alt={listing.name} />
 
         <div className="space-y-6">
           <div className="flex flex-wrap gap-2">

@@ -8,16 +8,19 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 - API: **desplegada** en https://management-backend-fawn.vercel.app (ya NO se usa la local). Configurada en `.env` (`VITE_API_URL`).
 - Listo: Login, AuthContext, ProtectedRoute, Layout (Sidebar + Header), PageContainer, Dashboard.
 - **Listings completo**: lista (tarjetas con imagen + titulo), detalle (galeria, precios, habitaciones, baños, area, descripcion, enlace), crear, editar y eliminar.
+- **Airbnb / Properties completo**: lista (tarjetas con imagen + titulo + rating + precio por noche), detalle (galeria, rating, precio/noche, estadia minima, habitaciones, baños, area, descripcion, enlace), crear, editar y eliminar. Rutas `/airbnb`, `/airbnb/create`, `/airbnb/:id`.
 - `npm run build` y `npm run lint` en verde.
-- Ramas: `main` (mergeada) y `feature/listings` (en desarrollo, sin push aun).
+- Ramas: `main` (con listings mergeado) y `feature/properties` (en desarrollo, sin push aun).
 
 ## Decisiones Importantes (y porque)
 
 - Precios y `sizeSqm` llegan como **string** (Decimal de Prisma) y pueden venir en `0` o `null`: se formatean con `Intl es-CO` y se ocultan si no hay valor (`src/lib/format.ts`).
 - Las descripciones vienen en Markdown simple: se limpian a texto plano en `cleanDescription` (sin agregar dependencias).
 - Formulario de listings compartido en `ListingForm.tsx` (lo usan crear y editar) para no duplicar codigo.
+- Galeria de imagenes reutilizable en `src/components/ImageGallery.tsx` (la usan Listings y Airbnb).
 - `media[]` se edita como textarea (una URL por linea) por ser simple y mobile first.
 - Lista de listings en grid responsive (`sm:2`, `lg:3`, `xl:4`) con `ListingCard` separado.
+- Properties: `price` es por noche; `rating` (0-5) se muestra con estrella y `minStayDays` en el detalle. Archivos en `src/pages/Airbnb/` (Rentals, PropertyCard, PropertyForm, CreateRental, RentalDetail).
 
 ## Aprendizajes y errores a evitar
 
@@ -28,5 +31,5 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 
 ## Proximos pasos
 
-- CRUD de Servicios (misma estructura que Listings).
-- Properties (Airbnb) y Perfil (`PATCH /users/me`), luego Exchange rates para mostrar COP.
+- CRUD de Servicios (misma estructura que Listings/Airbnb).
+- Perfil (`PATCH /users/me`), luego Exchange rates para mostrar COP.
