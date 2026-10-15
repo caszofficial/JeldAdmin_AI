@@ -120,7 +120,7 @@ export default function ListingDetail() {
         </div>
       }
     >
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <ImageGallery key={listing.id} media={listing.media} alt={listing.name} />
 
         <div className="space-y-6">

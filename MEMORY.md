@@ -31,6 +31,8 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 - Ediciones secuenciales de `App.tsx` (ruta antes que import) generan un error transitorio de HMR; se resuelve al guardar el import.
 - Cookie `Secure` sobre `http://localhost`: Chrome y Firefox la aceptan (localhost es origen seguro); si algun navegador la rechaza en dev, el fallback es `COOKIE_SECURE=false` en Vercel (no hace falta hoy).
 - Verificado con curl via proxy: `GET /api/properties` -> 200, `GET /api/auth/me` -> 401 JSON, `POST /api/auth/login` -> 401 `INVALID_CREDENTIALS` (el backend responde y el body POST viaja bien).
+- **Desborde horizontal en movil (vistas de detalle)**: `grid gap-8 lg:grid-cols-2` sin columnas base crea una pista implicita `auto` = `min-content`. La tira de miniaturas de `ImageGallery` (`overflow-x-auto`) tiene ~4300px de `min-content` (una propiedad real tiene 47 imagenes) y eso ensanchaba TODA la pista y la pagina. Se arregla declarando `grid-cols-1` (Tailwind usa `minmax(0,1fr)`); en escritorio no pasaba porque `lg:grid-cols-2` ya usa `minmax(0,1fr)`.
+- Como se diagnostico: Edge headless sobre la app real midiendo `scrollWidth` vs `viewport` y los `getBoundingClientRect()` de cada elemento (antes 4348 vs 477; despues 477 vs 477).
 
 ## Proximos pasos
 
