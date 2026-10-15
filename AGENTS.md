@@ -12,7 +12,7 @@ y permite hacer CRUD de las entidades de negocio (servicios, propiedades, etc).
 Solo tienes permitido agregar librerias de iconos si lo consideras necesario para adaptarte al estilo de https://berrydashboard.com/.
 
 El frontend no tiene lógica de negocio ni base de datos: todo vive en la API.
-Que en este caso se encuentra en C:\Users\user\Desktop\Javier\Vitrina main\management-backend.
+La API que se usa es la desplegada: https://management-backend-fawn.vercel.app (ya no se conecta al backend local).
 
 ## Convenciones
 
@@ -41,10 +41,10 @@ Que en este caso se encuentra en C:\Users\user\Desktop\Javier\Vitrina main\manag
 
 -Scaffold: Vite 8 + React 19 + TypeScript 6. Estilos con Tailwind 4 via el plugin `@tailwindcss/vite`; los tokens (colores primary/gold, fuente) se definen en `src/index.css` con `@theme`.
 -Iconos: `lucide-react` (unica dependencia extra permitida).
--Peticiones: instancia unica de axios en `src/api/client.ts` con `withCredentials: true` y `baseURL = VITE_API_URL` (por defecto `http://localhost:3000`).
--Estructura creada: `src/api`, `src/types`, `src/context` (AuthContext), `src/components` (ProtectedRoute, PageContainer, Sidebar, Header), `src/layout/Layout.tsx`, `src/pages` (Auth/Login, Dashboard, Placeholder).
+-Peticiones: instancia unica de axios en `src/api/client.ts` con `withCredentials: true` y `baseURL = VITE_API_URL` (por defecto `https://management-backend-fawn.vercel.app`).
+-Un modulo por entidad en `src/api` (peticiones), `src/types` (tipos) y `src/pages/<Entidad>/` (`<Entidad>.tsx`, `Create<Entidad>.tsx`, `<Entidad>Detail.tsx`).
 -`tsconfig.app.json` usa `verbatimModuleSyntax` y `erasableSyntaxOnly`: usar `import type` en imports de solo tipos.
--En local la API corre en `:3000` y el frontend en `:5173` (CORS_ORIGIN del backend ya lo permite).
+-Frontend en `:5173`; el backend desplegado ya permite ese origen por CORS con cookies.
 
 ## Memoria
 

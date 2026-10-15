@@ -4,28 +4,29 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 
 ## Estado actual
 
-- Frontend creado: Vite + React 19 + TypeScript + Tailwind 4 en `C:\Users\user\Desktop\panel javier solo ia`.
-- Listo: Login, AuthContext (cookie), ProtectedRoute, Layout (Sidebar + Header), PageContainer, Dashboard y placeholders de Servicios/Airbnb/Listings/Perfil.
+- Frontend en `C:\Users\user\Desktop\panel javier solo ia` (Vite 8 + React 19 + TS 6 + Tailwind 4).
+- API: **desplegada** en https://management-backend-fawn.vercel.app (ya NO se usa la local). Configurada en `.env` (`VITE_API_URL`).
+- Listo: Login, AuthContext, ProtectedRoute, Layout (Sidebar + Header), PageContainer, Dashboard.
+- **Listings completo**: lista (tarjetas con imagen + titulo), detalle (galeria, precios, habitaciones, baños, area, descripcion, enlace), crear, editar y eliminar.
 - `npm run build` y `npm run lint` en verde.
-- Git con remote `origin` → https://github.com/caszofficial/JeldAdmin_AI.git. Ramas subidas: `main` y `feature/login-and-admin-template` (commit `d7313a0`); pendiente PR/merge desde GitHub.
-- Backend corriendo en `http://localhost:3000` (usa Neon) y frontend en `http://localhost:5173`.
+- Ramas: `main` (mergeada) y `feature/listings` (en desarrollo, sin push aun).
 
 ## Decisiones Importantes (y porque)
 
-- Tailwind 4 via `@tailwindcss/vite` + tokens en `src/index.css` (`@theme`): paleta primary (violeta) y gold para el look luxury tipo Berry.
-- Iconos con `lucide-react` (unica libreria extra permitida por AGENTS).
-- Axios con `withCredentials: true` y baseURL desde `VITE_API_URL` (`.env`, no sensible).
-- Paleta/oro en sidebar oscuro (`bg-slate-900`), activo con `bg-primary-600`.
-- API: registro/login devuelven `{ user }`; el estado de sesion va en cookie httpOnly `session_id`.
-- `AuthContext` expone `user`, `loading`, `checkAuth()`, `login()`, `logout()`.
+- Precios y `sizeSqm` llegan como **string** (Decimal de Prisma) y pueden venir en `0` o `null`: se formatean con `Intl es-CO` y se ocultan si no hay valor (`src/lib/format.ts`).
+- Las descripciones vienen en Markdown simple: se limpian a texto plano en `cleanDescription` (sin agregar dependencias).
+- Formulario de listings compartido en `ListingForm.tsx` (lo usan crear y editar) para no duplicar codigo.
+- `media[]` se edita como textarea (una URL por linea) por ser simple y mobile first.
+- Lista de listings en grid responsive (`sm:2`, `lg:3`, `xl:4`) con `ListingCard` separado.
 
 ## Aprendizajes y errores a evitar
 
-- `tsconfig.app.json` tiene `verbatimModuleSyntax` y `erasableSyntaxOnly`: usar siempre `import type` en imports de solo tipos.
-- Lint (oxlint) avisa por `setState` dentro de `useEffect`; se silencia puntual en la carga inicial de sesion.
-- El backend tarda unos segundos en quedar listo tras `npm run dev` (esperar antes de probar `/health`).
+- `verbatimModuleSyntax` + `erasableSyntaxOnly`: usar siempre `import type` en imports de tipos.
+- oxlint avisa por `setState` dentro de `useEffect`: para resetear estado de un componente al cambiar de item, usar `key` en vez de un effect.
+- Ediciones secuenciales de `App.tsx` (ruta antes que import) generan un error transitorio de HMR; se resuelve al guardar el import.
+- CORS del backend desplegado ya permite `http://localhost:5173` con credenciales (`ACAO` + `ACAC: true`).
 
 ## Proximos pasos
 
-- CRUD de Servicios (lista, crear, detalle/editar, eliminar) siguiendo el contrato de la API.
-- Luego Properties (Airbnb), Listings, Perfil (`PATCH /users/me`) y Exchange rates.
+- CRUD de Servicios (misma estructura que Listings).
+- Properties (Airbnb) y Perfil (`PATCH /users/me`), luego Exchange rates para mostrar COP.

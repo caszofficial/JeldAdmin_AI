@@ -4,6 +4,9 @@ import { AuthProvider } from './context/AuthContext'
 import Layout from './layout/Layout'
 import Login from './pages/Auth/Login'
 import Dashboard from './pages/Dashboard'
+import CreateListing from './pages/Listings/CreateListing'
+import ListingDetail from './pages/Listings/ListingDetail'
+import Listings from './pages/Listings/Listings'
 import Placeholder from './pages/Placeholder'
 
 export default function App() {
@@ -40,15 +43,9 @@ export default function App() {
                 />
               }
             />
-            <Route
-              path="listings"
-              element={
-                <Placeholder
-                  title="Listings"
-                  description="Aquí podrás administrar las publicaciones de venta y alquiler."
-                />
-              }
-            />
+            <Route path="listings" element={<Listings />} />
+            <Route path="listings/create" element={<CreateListing />} />
+            <Route path="listings/:id" element={<ListingDetail />} />
             <Route
               path="profile"
               element={
