@@ -7,7 +7,7 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 - Frontend creado: Vite + React 19 + TypeScript + Tailwind 4 en `C:\Users\user\Desktop\panel javier solo ia`.
 - Listo: Login, AuthContext (cookie), ProtectedRoute, Layout (Sidebar + Header), PageContainer, Dashboard y placeholders de Servicios/Airbnb/Listings/Perfil.
 - `npm run build` y `npm run lint` en verde.
-- Git iniciado con remote `origin` → https://github.com/caszofficial/JeldAdmin_AI.git (commit inicial hecho, sin push).
+- Git con remote `origin` → https://github.com/caszofficial/JeldAdmin_AI.git. Ramas subidas: `main` y `feature/login-and-admin-template` (commit `d7313a0`); pendiente PR/merge desde GitHub.
 - Backend corriendo en `http://localhost:3000` (usa Neon) y frontend en `http://localhost:5173`.
 
 ## Decisiones Importantes (y porque)
