@@ -1,7 +1,7 @@
 # JELD Admin Console
 
 SPA de administración de **JELD GROUP** (React + Vite + TypeScript + Tailwind).
-Consume la API REST del `management-backend` (Fastify + Prisma + PostgreSQL).
+Consume la API REST desplegada en `https://management-backend-fawn.vercel.app`.
 
 ## Comandos
 
@@ -12,11 +12,11 @@ npm run build    # producción
 npm run lint     # linting
 ```
 
-La API debe estar corriendo en `http://localhost:3000`. La URL se configura en `.env`
-(`VITE_API_URL`).
+La URL de la API se configura en `.env` (`VITE_API_URL`).
 
 ## Estado
 
 - Login con sesión por cookie (`POST /auth/login`, `GET /auth/me`).
 - Layout del panel: sidebar + header + `PageContainer`.
-- Dashboard y páginas placeholder de Servicios, Airbnb, Listings y Perfil.
+- **Listings**: lista en tarjetas (imagen + título), detalle con toda la info, crear, editar y eliminar.
+- Pendientes: Servicios, Airbnb/Properties y Perfil.
