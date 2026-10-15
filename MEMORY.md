@@ -5,15 +5,17 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 ## Estado actual
 
 - Frontend en `C:\Users\user\Desktop\panel javier solo ia` (Vite 8 + React 19 + TS 6 + Tailwind 4).
-- API: **desplegada** en https://management-backend-fawn.vercel.app (ya NO se usa la local). Configurada en `.env` (`VITE_API_URL`).
+- API: **desplegada** en https://management-backend-fawn.vercel.app (ya NO se usa la local). El navegador le habla por `/api` y Vite hace de proxy (ver Decisiones).
 - Listo: Login, AuthContext, ProtectedRoute, Layout (Sidebar + Header), PageContainer, Dashboard.
 - **Listings completo**: lista (tarjetas con imagen + titulo), detalle (galeria, precios, habitaciones, baños, area, descripcion, enlace), crear, editar y eliminar.
 - **Airbnb / Properties completo**: lista (tarjetas con imagen + titulo + rating + precio por noche), detalle (galeria, rating, precio/noche, estadia minima, habitaciones, baños, area, descripcion, enlace), crear, editar y eliminar. Rutas `/airbnb`, `/airbnb/create`, `/airbnb/:id`.
 - `npm run build` y `npm run lint` en verde.
-- Ramas: `main` (con listings mergeado) y `feature/properties` (en desarrollo, sin push aun).
+- Ramas mergeadas: `main` (listings + properties).
 
 ## Decisiones Importantes (y porque)
 
+- **Sesion same-origin via proxy (fix del 401)**: `client.ts` usa `baseURL: '/api'` y `vite.config.ts` proxya `/api` al backend (`VITE_API_URL`). Antes el navegador llamaba directo a `vercel.app` desde `localhost:5173`: eso es **cross-site**, y la cookie `session_id` (`SameSite=Lax`, `Secure=true` en Vercel) no se envia en XHR cross-site -> `POST/PATCH/DELETE` daban 401 (login "parecia" ok porque el `user` viene en el body y los GET son publicos). Con el proxy todo es mismo origen -> cookie first-party -> funciona. **Cross-origin no es lo mismo que cross-site: los puertos no cuentan para SameSite.**
+- La version anterior (`management-frontend/core-businesses`) funcionaba porque hardcodeaba `http://localhost:3000`: frontend y API en `localhost` = mismo site.
 - Precios y `sizeSqm` llegan como **string** (Decimal de Prisma) y pueden venir en `0` o `null`: se formatean con `Intl es-CO` y se ocultan si no hay valor (`src/lib/format.ts`).
 - Las descripciones vienen en Markdown simple: se limpian a texto plano en `cleanDescription` (sin agregar dependencias).
 - Formulario de listings compartido en `ListingForm.tsx` (lo usan crear y editar) para no duplicar codigo.
@@ -27,7 +29,8 @@ Memoria del proyecto Jeld Admin console entre sesiones. Maximo 50 lineas: resume
 - `verbatimModuleSyntax` + `erasableSyntaxOnly`: usar siempre `import type` en imports de tipos.
 - oxlint avisa por `setState` dentro de `useEffect`: para resetear estado de un componente al cambiar de item, usar `key` en vez de un effect.
 - Ediciones secuenciales de `App.tsx` (ruta antes que import) generan un error transitorio de HMR; se resuelve al guardar el import.
-- CORS del backend desplegado ya permite `http://localhost:5173` con credenciales (`ACAO` + `ACAC: true`).
+- Cookie `Secure` sobre `http://localhost`: Chrome y Firefox la aceptan (localhost es origen seguro); si algun navegador la rechaza en dev, el fallback es `COOKIE_SECURE=false` en Vercel (no hace falta hoy).
+- Verificado con curl via proxy: `GET /api/properties` -> 200, `GET /api/auth/me` -> 401 JSON, `POST /api/auth/login` -> 401 `INVALID_CREDENTIALS` (el backend responde y el body POST viaja bien).
 
 ## Proximos pasos
 
