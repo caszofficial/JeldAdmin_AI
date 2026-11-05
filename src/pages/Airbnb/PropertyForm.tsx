@@ -225,7 +225,7 @@ export default function PropertyForm({
 
         <div>
           <span className="mb-1 block text-sm font-medium text-slate-700">Imagenes</span>
-          <ImageUploader folder="properties" value={media} onChange={setMedia} />
+          <ImageUploader folder={`properties/${initial?.id ?? 'new'}`} value={media} onChange={setMedia} />
         </div>
       </section>
 
