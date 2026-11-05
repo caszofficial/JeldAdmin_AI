@@ -55,7 +55,7 @@ export default function CarRentalDetail() {
         <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Ciudad" className="border border-gray-300 rounded-full px-5 py-3" />
         <input value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Pais" className="border border-gray-300 rounded-full px-5 py-3" />
         <input value={pricePerDay} onChange={(e) => setPricePerDay(e.target.value)} placeholder="Precio por dia" type="number" className="border border-gray-300 rounded-full px-5 py-3" />
-        <ImageUploader folder={`car-rentals/${id ?? 'new'}`} value={media} onChange={setMedia} />
+        <ImageUploader folder="car-rentals" value={media} onChange={setMedia} />
         <button onClick={handleSave} className="bg-black text-white rounded-full px-5 py-3">Guardar</button>
         <button onClick={handleDelete} className="text-red-600">Eliminar</button>
       </div>
