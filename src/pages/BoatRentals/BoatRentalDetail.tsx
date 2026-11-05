@@ -13,6 +13,8 @@ export default function BoatRentalDetail() {
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
   const [pricePerHour, setPricePerHour] = useState('')
+  const [capacity, setCapacity] = useState('')
+  const [minRentalHours, setMinRentalHours] = useState('')
   const [media, setMedia] = useState<string[]>([])
 
   useEffect(() => {
@@ -23,6 +25,8 @@ export default function BoatRentalDetail() {
       setCity(data.city ?? '')
       setCountry(data.country ?? '')
       setPricePerHour(data.pricePerHour)
+      setCapacity(data.capacity?.toString() ?? '')
+      setMinRentalHours(data.minRentalHours?.toString() ?? '')
       setMedia(data.media ?? [])
     })
   }, [id])
@@ -34,6 +38,8 @@ export default function BoatRentalDetail() {
       city: city || undefined,
       country: country || undefined,
       pricePerHour: Number(pricePerHour),
+      capacity: capacity ? Number(capacity) : undefined,
+      minRentalHours: minRentalHours ? Number(minRentalHours) : undefined,
       media,
     })
     navigate('/boat-rentals')
@@ -55,6 +61,8 @@ export default function BoatRentalDetail() {
         <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Ciudad" className="border border-gray-300 rounded-full px-5 py-3" />
         <input value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Pais" className="border border-gray-300 rounded-full px-5 py-3" />
         <input value={pricePerHour} onChange={(e) => setPricePerHour(e.target.value)} placeholder="Precio por hora" type="number" className="border border-gray-300 rounded-full px-5 py-3" />
+        <input value={capacity} onChange={(e) => setCapacity(e.target.value)} placeholder="Capacidad" type="number" className="border border-gray-300 rounded-full px-5 py-3" />
+        <input value={minRentalHours} onChange={(e) => setMinRentalHours(e.target.value)} placeholder="Horas minimas" type="number" className="border border-gray-300 rounded-full px-5 py-3" />
         <ImageUploader folder={`boat-rentals/${(name.trim() || 'bote').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} value={media} onChange={setMedia} />
         <button onClick={handleSave} className="bg-black text-white rounded-full px-5 py-3">Guardar</button>
         <button onClick={handleDelete} className="text-red-600">Eliminar</button>
