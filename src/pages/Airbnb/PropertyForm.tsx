@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ImageUploader from '../../components/ImageUploader'
 import type { FormEvent } from 'react'
 import { Loader2 } from 'lucide-react'
 import type { Property, PropertyInput } from '../../types/property'
@@ -31,7 +32,7 @@ export default function PropertyForm({
   const [sizeSqm, setSizeSqm] = useState(initial?.sizeSqm ?? '')
   const [description, setDescription] = useState(initial?.description ?? '')
   const [link, setLink] = useState(initial?.link ?? '')
-  const [media, setMedia] = useState((initial?.media ?? []).join('\n'))
+  const [media, setMedia] = useState<string[]>(initial?.media ?? [])
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
@@ -63,10 +64,7 @@ export default function PropertyForm({
       minStayDays: Number(minStayDays),
       bedrooms: Number(bedrooms),
       bathrooms: Number(bathrooms),
-      media: media
-        .split('\n')
-        .map((url) => url.trim())
-        .filter(Boolean),
+      media,
     }
 
     if (address.trim()) input.address = address.trim()
@@ -225,18 +223,10 @@ export default function PropertyForm({
           />
         </label>
 
-        <label className="block">
-          <span className="mb-1 block text-sm font-medium text-slate-700">
-            Imágenes (una URL por línea)
-          </span>
-          <textarea
-            rows={4}
-            value={media}
-            onChange={(e) => setMedia(e.target.value)}
-            placeholder="https://..."
-            className="w-full rounded-3xl border border-slate-200 px-5 py-3 text-sm text-slate-800 outline-none focus:border-primary-500"
-          />
-        </label>
+        <div>
+          <span className="mb-1 block text-sm font-medium text-slate-700">Imagenes</span>
+          <ImageUploader folder="properties" value={media} onChange={setMedia} />
+        </div>
       </section>
 
       {error && <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>}
