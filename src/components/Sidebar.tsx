@@ -1,4 +1,4 @@
-import { Briefcase, Building2, Home, LayoutDashboard, User, X } from 'lucide-react'
+import { Briefcase, Building2, Car, Home, LayoutDashboard, Ship, User, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
@@ -19,6 +19,8 @@ const navItems: NavItem[] = [
   { to: '/services', label: 'Servicios', icon: Briefcase },
   { to: '/airbnb', label: 'Airbnb', icon: Home },
   { to: '/listings', label: 'Listings', icon: Building2 },
+  { to: '/boat-rentals', label: 'Botes', icon: Ship },
+  { to: '/car-rentals', label: 'Carros', icon: Car },
   { to: '/profile', label: 'Perfil', icon: User },
 ]
 

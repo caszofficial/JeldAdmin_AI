@@ -10,6 +10,12 @@ import Dashboard from './pages/Dashboard'
 import CreateListing from './pages/Listings/CreateListing'
 import ListingDetail from './pages/Listings/ListingDetail'
 import Listings from './pages/Listings/Listings'
+import BoatRentals from './pages/BoatRentals/BoatRentals'
+import CreateBoatRental from './pages/BoatRentals/CreateBoatRental'
+import BoatRentalDetail from './pages/BoatRentals/BoatRentalDetail'
+import CarRentals from './pages/CarRentals/CarRentals'
+import CreateCarRental from './pages/CarRentals/CreateCarRental'
+import CarRentalDetail from './pages/CarRentals/CarRentalDetail'
 import Placeholder from './pages/Placeholder'
 
 export default function App() {
@@ -43,6 +49,12 @@ export default function App() {
             <Route path="listings" element={<Listings />} />
             <Route path="listings/create" element={<CreateListing />} />
             <Route path="listings/:id" element={<ListingDetail />} />
+            <Route path="boat-rentals" element={<BoatRentals />} />
+            <Route path="boat-rentals/create" element={<CreateBoatRental />} />
+            <Route path="boat-rentals/:id" element={<BoatRentalDetail />} />
+            <Route path="car-rentals" element={<CarRentals />} />
+            <Route path="car-rentals/create" element={<CreateCarRental />} />
+            <Route path="car-rentals/:id" element={<CarRentalDetail />} />
             <Route
               path="profile"
               element={
