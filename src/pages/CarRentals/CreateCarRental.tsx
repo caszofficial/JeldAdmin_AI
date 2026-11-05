@@ -28,7 +28,7 @@ export default function CreateCarRental() {
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nombre" className="border border-gray-300 rounded-full px-5 py-3" required />
         <input value={pricePerDay} onChange={(e) => setPricePerDay(e.target.value)} placeholder="Precio por dia" type="number" className="border border-gray-300 rounded-full px-5 py-3" required />
         <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Ciudad" className="border border-gray-300 rounded-full px-5 py-3" />
-        <ImageUploader folder="car-rentals" value={media} onChange={setMedia} />
+        <ImageUploader folder={`car-rentals/${(name.trim() || 'carro').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} value={media} onChange={setMedia} />
         <button type="submit" className="bg-black text-white rounded-full px-5 py-3">Crear</button>
       </form>
     </PageContainer>

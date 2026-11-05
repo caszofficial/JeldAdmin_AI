@@ -28,7 +28,7 @@ export default function CreateBoatRental() {
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nombre" className="border border-gray-300 rounded-full px-5 py-3" required />
         <input value={pricePerHour} onChange={(e) => setPricePerHour(e.target.value)} placeholder="Precio por hora" type="number" className="border border-gray-300 rounded-full px-5 py-3" required />
         <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Ciudad" className="border border-gray-300 rounded-full px-5 py-3" />
-        <ImageUploader folder="boat-rentals" value={media} onChange={setMedia} />
+        <ImageUploader folder={`boat-rentals/${(name.trim() || 'bote').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} value={media} onChange={setMedia} />
         <button type="submit" className="bg-black text-white rounded-full px-5 py-3">Crear</button>
       </form>
     </PageContainer>
